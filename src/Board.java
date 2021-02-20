@@ -7,17 +7,18 @@ public class Board {
 	private static Cell cursor;
 	private static int height;
 	private static int length;
+	
 	public Board(int height, int length) {
-		cells = new Cell[height][length]; 
+		cells = new Cell[length][height]; 
 		piece = new Piece(0);
 		this.length = length;
 		this.height = height;
-		for(int i=0;i<height;i++) {
-			for(int j=0;j<length;j++) {
+		for(int i=0;i<length;i++) {
+			for(int j=0;j<height;j++) {
 				cells[i][j] = new Cell(i, j, false);
 			}
 		}
-		this.cursor = cells[height/2][length/2];
+		this.cursor = cells[length/2][height/2];
 		cursor.setOccupied(true);
 	}
 	
@@ -26,11 +27,11 @@ public class Board {
 	void printBoard() {
 		  
 	
-		for(int i=0;i<height;i++) {
+		for(int i=0;i<length;i++) {
 			System.out.print(" | ");
-			for(int j=0;j<length;j++) {
+			for(int j=0;j<height;j++) {
 				if(cells[j][i].isOccupied() == true)
-					System.out.print("X | " );
+					System.out.print("C | " );
 				
 				else {
 					if(i==height/2 && j == length/2) 
@@ -51,16 +52,20 @@ public class Board {
 		
 	}
 	
-	int calculateTraversalDistance(Cell cell) {
+	static int calculateTraversalDistance() {
 		
-		return 0;
+		return Math.abs(cursor.getX()-(height/2))+Math.abs(cursor.getY()-(length/2));
 	}
 	
 	public static void main(String[] args) {
 		
-		Board board = new Board(7,7);
+		System.out.println();
+		System.out.println("Enter BOARD SIZE AS A NUMBER. For Example 6 refers 6 X 6 size board");
+		Scanner scanner = new Scanner(System.in); 
+	    int SIZE = Integer.parseInt(scanner.nextLine());
+		Board board = new Board(SIZE,SIZE);
 		
-		 Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+		  // Create a Scanner object
 		    System.out.println("Enter comma separated Commands");
 		    String commandString = scanner.nextLine();
 		    
@@ -72,19 +77,19 @@ public class Board {
 		    	switch(array[0].toUpperCase()) {
 		    	  case "F":
 		    	    // code block
-		    		  System.out.println("Front " + array[1]);
+//		    		  System.out.println("Front " + array[1]);
 		    		  MoveFront(Integer.parseInt(array[1]));
 		    	    break;
 		    	  case "B":
-		    		  System.out.println("Back " + array[1]);
+//		    		  System.out.println("Back " + array[1]);
 		    		  MoveBack(Integer.parseInt(array[1]));
 		    	    break;
 		    	  case "R":
-		    		  System.out.println("Right " + array[1]);
+//		    		  System.out.println("Right " + array[1]);
 		    		  TurnRight(Integer.parseInt(array[1]));
 		    	    break;
 		    	  case "L":
-		    		  System.out.println("Left " + array[1]);
+//		    		  System.out.println("Left " + array[1]);
 		    		  TurnLeft(Integer.parseInt(array[1]));
 		    	    break;
 		    	  default:
@@ -92,6 +97,7 @@ public class Board {
 		    	}
 		    }
 		board.printBoard();	
+		System.out.println("TRAVERSAL DISTANCE IS : " + calculateTraversalDistance());
 
 	}
 
@@ -101,7 +107,7 @@ public class Board {
 		// TODO Auto-generated method stub
 		for(int k=0;k<i; k++)
 			piece.turnLeft();
-		System.out.println(piece.getDirection());
+//		System.out.println(piece.getDirection());
 	}
 
 
@@ -110,7 +116,7 @@ public class Board {
 		// TODO Auto-generated method stub
 		for(int k=0;k<i; k++)
 			piece.turnRight();
-		System.out.println(piece.getDirection());
+//		System.out.println(piece.getDirection());
 	}
 
 
@@ -123,7 +129,7 @@ public class Board {
 			switch(direction) {
 			  case 0:
 				  cursor.setOccupied(false);
-				  cursor = cells[cursor.getX()][cursor.getY()-1];
+				  cursor = cells[cursor.getX()][cursor.getY()+1];
 				  cursor.setOccupied(true);
 			    break;
 			  case 1:
@@ -134,7 +140,7 @@ public class Board {
 			    // code block
 			  case 2:
 				  cursor.setOccupied(false);
-				  cursor = cells[cursor.getX()][cursor.getY()+1];
+				  cursor = cells[cursor.getX()][cursor.getY()-1];
 				  cursor.setOccupied(true);
 			    break;
 				    // code block
@@ -149,7 +155,7 @@ public class Board {
 			    // code block
 			}
 		}
-		System.out.println(cursor.getX()+", "+cursor.getY());
+//		System.out.println(cursor.getX()+", "+cursor.getY());
 		
 	}
 
@@ -162,7 +168,7 @@ public class Board {
 		switch(direction) {
 		  case 0:
 			  cursor.setOccupied(false);
-			  cursor = cells[cursor.getX()][cursor.getY()+1];
+			  cursor = cells[cursor.getX()][cursor.getY()-1];
 			  cursor.setOccupied(true);
 		    break;
 		  case 1:
@@ -173,7 +179,7 @@ public class Board {
 		    // code block
 		  case 2:
 			  cursor.setOccupied(false);
-			  cursor = cells[cursor.getX()][cursor.getY()-1];
+			  cursor = cells[cursor.getX()][cursor.getY()+1];
 			  cursor.setOccupied(true);
 		    break;
 			    // code block
@@ -188,21 +194,12 @@ public class Board {
 		    // code block
 		}
 		}
-		System.out.println(cursor.getX()+", "+cursor.getY());
+//		System.out.println(cursor.getX()+", "+cursor.getY());
 		
 	}
 
 
 
-	public Cell getCursor() {
-		return cursor;
-	}
-
-
-
-	public void setCursor(Cell cursor) {
-		this.cursor = cursor;
-	}
-
+	
 	
 }
