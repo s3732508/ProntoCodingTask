@@ -13,9 +13,9 @@ public class Board {
 		piece = new Piece(0);
 		this.length = length;
 		this.height = height;
-		for(int i=0;i<length;i++) {
-			for(int j=0;j<height;j++) {
-				cells[i][j] = new Cell(i, j, false);
+		for(int i=0;i<height;i++) {
+			for(int j=0;j<length;j++) {
+				cells[j][i] = new Cell(j, i, false);
 			}
 		}
 		this.cursor = cells[length/2][height/2];
@@ -27,9 +27,9 @@ public class Board {
 	void printBoard() {
 		  
 	
-		for(int i=0;i<length;i++) {
+		for(int i=0;i<height;i++) {
 			System.out.print(" | ");
-			for(int j=0;j<height;j++) {
+			for(int j=0;j<length;j++) {
 				if(cells[j][i].isOccupied() == true)
 					System.out.print("C | " );
 				
@@ -54,50 +54,61 @@ public class Board {
 	
 	static int calculateTraversalDistance() {
 		
-		return Math.abs(cursor.getX()-(height/2))+Math.abs(cursor.getY()-(length/2));
+		return Math.abs(cursor.getX()-(length/2))+Math.abs(cursor.getY()-(height/2));
 	}
 	
 	public static void main(String[] args) {
 		
 		System.out.println();
-		System.out.println("Enter BOARD SIZE AS A NUMBER. For Example 6 refers 6 X 6 size board");
+		System.out.println("Enter BOARD SIZE AS A NUMBER. For Example 6,7 refers height - 6, length -7  board");
 		Scanner scanner = new Scanner(System.in); 
-	    int SIZE = Integer.parseInt(scanner.nextLine());
-		Board board = new Board(SIZE,SIZE);
+		String commandString = scanner.nextLine();
+		String[] commands = commandString.split(","); 
+		
+	    int length = Integer.parseInt(commands[0]);
+	    int height = Integer.parseInt(commands[1]);
+	    
+		Board board = new Board(length,height);
 		
 		  // Create a Scanner object
 		    System.out.println("Enter comma separated Commands");
-		    String commandString = scanner.nextLine();
+		    commandString = scanner.nextLine();
 		    
-		    String[] commands = commandString.split(","); 
+		    commands = commandString.split(","); 
 		    
-		    for (String command : commands) {
-		    	String[] array = command.split("");
-		    	//System.out.println( array[0]+ " "+ array[1]);
-		    	switch(array[0].toUpperCase()) {
-		    	  case "F":
-		    	    // code block
-//		    		  System.out.println("Front " + array[1]);
-		    		  MoveFront(Integer.parseInt(array[1]));
-		    	    break;
-		    	  case "B":
-//		    		  System.out.println("Back " + array[1]);
-		    		  MoveBack(Integer.parseInt(array[1]));
-		    	    break;
-		    	  case "R":
-//		    		  System.out.println("Right " + array[1]);
-		    		  TurnRight(Integer.parseInt(array[1]));
-		    	    break;
-		    	  case "L":
-//		    		  System.out.println("Left " + array[1]);
-		    		  TurnLeft(Integer.parseInt(array[1]));
-		    	    break;
-		    	  default:
-		    	    // code block
-		    	}
-		    }
-		board.printBoard();	
-		System.out.println("TRAVERSAL DISTANCE IS : " + calculateTraversalDistance());
+		    try {
+		    	for (String command : commands) {
+			    	String[] array = command.split("");
+			    	//System.out.println( array[0]+ " "+ array[1]);
+			    	switch(array[0].toUpperCase()) {
+			    	  case "F":
+			    	    // code block
+//			    		  System.out.println("Front " + array[1]);
+			    		  MoveFront(Integer.parseInt(array[1]));
+			    	    break;
+			    	  case "B":
+//			    		  System.out.println("Back " + array[1]);
+			    		  MoveBack(Integer.parseInt(array[1]));
+			    	    break;
+			    	  case "R":
+//			    		  System.out.println("Right " + array[1]);
+			    		  TurnRight(Integer.parseInt(array[1]));
+			    	    break;
+			    	  case "L":
+//			    		  System.out.println("Left " + array[1]);
+			    		  TurnLeft(Integer.parseInt(array[1]));
+			    	    break;
+			    	  default:
+			    	    // code block
+			    	}
+			    	board.printBoard();	
+					System.out.println("TRAVERSAL DISTANCE IS : " + calculateTraversalDistance());
+			    }
+	    		  }catch(Exception e) {
+	    			  System.out.println("The cursor is moving out of the table, Please retry with a bigger size Board");
+	    			 
+	    		  } 
+		
 
 	}
 
