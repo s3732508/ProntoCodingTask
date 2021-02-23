@@ -69,27 +69,24 @@ public class Board {
 			System.err.println(
 					"Invalid input \nPlease give the input in the format as integer,integer \nInteger must be greater than 0 \nMax Value : 1000000");
 			System.exit(1);
-		}
-		catch (OutOfMemoryError e) {
-			System.err.println(
-					"length * height cannot be greater than 10000000");
+		} catch (OutOfMemoryError e) {
+			System.err.println("length * height cannot be greater than 10000000");
 			System.exit(1);
 		}
 		System.out.println("Enter comma separated Commands. \nExample command: R1,L1,B3");
 		commandString = scanner.nextLine();
 		commands = commandString.split(",");
-		
-		System.out.println("Traversal Distance : " + executecommands(board, commands));
+
+		System.out.println("Traversal Distance : " + executecommands(commands));
 		System.out.println("Print Board ??? y- yes ");
 		String drawboard = scanner.nextLine();
-		
-		
-		if(drawboard.toUpperCase().equals("Y"))
+
+		if (drawboard.toUpperCase().equals("Y"))
 			board.printBoard();
 
 	}
 
-	private static int executecommands(Board board, String[] commands) {
+	static int executecommands(String[] commands) {
 		// TODO Auto-generated method stub
 		try {
 			for (String command : commands) {
@@ -123,7 +120,8 @@ public class Board {
 
 			}
 		} catch (Exception e) {
-			System.out.println("Invalid input \nPlease give the input in the format requested \nAlso Make sure the given input is under the board boundaries");
+			System.out.println(
+					"Invalid input \nPlease give the input in the format requested \nAlso Make sure the given input is under the board boundaries");
 			System.exit(0);
 		}
 		return Math.abs(cursor.getX() - (length / 2)) + Math.abs(cursor.getY() - (height / 2));
