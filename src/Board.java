@@ -23,34 +23,27 @@ public class Board {
 	}
 
 	void printBoard() {
-
 		for (int i = 0; i < height; i++) {
 			System.out.print(" | ");
 			for (int j = 0; j < length; j++) {
 				if (cells[j][i].isOccupied() == true)
 					System.out.print("C | ");
-
 				else {
 					if (i == height / 2 && j == length / 2)
 						System.out.print("O | ");
 					else
 						System.out.print("  | ");
 				}
-
 			}
 			System.out.println();
-
-			for (int j = 0; j < length; j++) {
+			for (int j = 0; j < height; j++)
 				System.out.print("-----");
-			}
-
 			System.out.println();
 		}
 
 	}
 
 	public static void main(String[] args) {
-
 		System.out.println();
 		System.out.println("Enter BOARD SIZE AS A NUMBER.\nFor Example 6,7 refers height of 6, length of 7  board");
 		Scanner scanner = new Scanner(System.in);
@@ -77,17 +70,15 @@ public class Board {
 		commandString = scanner.nextLine();
 		commands = commandString.split(",");
 
-		System.out.println("Traversal Distance : " + executecommands(commands));
+		System.out.println("Traversal Distance : " + board.executecommands(commands));
 		System.out.println("Print Board ??? y- yes ");
 		String drawboard = scanner.nextLine();
 
 		if (drawboard.toUpperCase().equals("Y"))
 			board.printBoard();
-
 	}
 
-	static int executecommands(String[] commands) {
-		// TODO Auto-generated method stub
+	int executecommands(String[] commands) {
 		try {
 			for (String command : commands) {
 				String[] array = command.split("");
@@ -98,26 +89,23 @@ public class Board {
 				}
 				switch (array[0].toUpperCase()) {
 				case "F":
-					// code block
-//			    		  System.out.println("Front " + array[1]);
 					MoveFront(number);
 					break;
 				case "B":
-//			    		  System.out.println("Back " + array[1]);
+
 					MoveBack(number);
 					break;
 				case "R":
-//			    		  System.out.println("Right " + array[1]);
+
 					TurnRight(number);
 					break;
 				case "L":
-//			    		  System.out.println("Left " + array[1]);
+
 					TurnLeft(number);
 					break;
 				default:
 					throw new Exception();
 				}
-
 			}
 		} catch (Exception e) {
 			System.out.println(
@@ -125,28 +113,22 @@ public class Board {
 			System.exit(0);
 		}
 		return Math.abs(cursor.getX() - (length / 2)) + Math.abs(cursor.getY() - (height / 2));
-
 	}
 
 	private static void TurnLeft(int i) {
-		// TODO Auto-generated method stub
 		for (int k = 0; k < i; k++)
 			piece.turnLeft();
-//		System.out.println(piece.getDirection());
 	}
 
 	private static void TurnRight(int i) {
-		// TODO Auto-generated method stub
 		for (int k = 0; k < i; k++)
 			piece.turnRight();
-//		System.out.println(piece.getDirection());
 	}
 
 	private static void MoveBack(int i) {
 		// TODO Auto-generated method stub
 		int direction = piece.getDirection();
 		for (int k = 0; k < i; k++) {
-
 			switch (direction) {
 			case 0:
 				cursor.setOccupied(false);
@@ -158,25 +140,19 @@ public class Board {
 				cursor = cells[cursor.getX() - 1][cursor.getY()];
 				cursor.setOccupied(true);
 				break;
-			// code block
 			case 2:
 				cursor.setOccupied(false);
 				cursor = cells[cursor.getX()][cursor.getY() - 1];
 				cursor.setOccupied(true);
 				break;
-			// code block
 			case 3:
 				cursor.setOccupied(false);
 				cursor = cells[cursor.getX() + 1][cursor.getY()];
 				cursor.setOccupied(true);
 				break;
-
 			default:
-				// code block
 			}
 		}
-//		System.out.println(cursor.getX()+", "+cursor.getY());
-
 	}
 
 	private static void MoveFront(int i) {
@@ -194,25 +170,18 @@ public class Board {
 				cursor = cells[cursor.getX() + 1][cursor.getY()];
 				cursor.setOccupied(true);
 				break;
-			// code block
 			case 2:
 				cursor.setOccupied(false);
 				cursor = cells[cursor.getX()][cursor.getY() + 1];
 				cursor.setOccupied(true);
 				break;
-			// code block
 			case 3:
 				cursor.setOccupied(false);
 				cursor = cells[cursor.getX() - 1][cursor.getY()];
 				cursor.setOccupied(true);
 				break;
-
 			default:
-				// code block
 			}
 		}
-//		System.out.println(cursor.getX()+", "+cursor.getY());
-
 	}
-
 }
