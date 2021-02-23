@@ -1,3 +1,6 @@
+# ProntoCodingTask
+The repository is a Java Based Project created as part of a coding test conducted by Pronto.
+
 # Sample Java Project
 
 This is a Java based project which calculates Traversal distance between origin
